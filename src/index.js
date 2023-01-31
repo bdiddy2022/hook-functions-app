@@ -4,17 +4,35 @@ import './index.css';
 
 function App() {
 
-  const [checked, toggle] = useReducer(
-    (checked) => !checked, false
+  const initialState = {
+    message: "hi"
+  };
+
+  function reducer(state, action) {
+    switch(action.type) {
+      case "yell" : return {
+        message: `HEY! I JUST SAID '${(state.message.toUpperCase())}'`
+      };
+      case "whisper" :
+        return {
+          message: `excuse me, but I said '${state.message.toLowerCase()}'`
+        };
+        case "greet" : return {
+          message: `Hi`
+        };
+    }
+  }
+
+  const [state, dispatch] = useReducer(
+    reducer, initialState
   );
 
   return (
     <>
-      <input
-        type="checkbox"
-        value={checked}
-        onChange={toggle}
-      />{checked ? "checked" : "not checked"}
+      <p>Message: {state.message}</p>
+      <button onClick={() => dispatch({type: "yell"})}>YELL</button>
+      <button onClick={() => dispatch({type: "whisper"})}>whisper</button>
+      <button onClick={() => dispatch({type: "greet"})}>Say hello</button>
     </>
   );
 
