@@ -4,22 +4,20 @@ import './index.css';
 
 function App() {
 
-  const sound = useRef();
-  const color = useRef();
+  const [sound, setSound] = useState("");
+  const [color, setColor] = useState("#000000");
 
   const submit = (e) => {
     e.preventDefault();
-    const soundValue = sound.current.value; //'current.value" provided by useRef
-    const colorValue = color.current.value;
-    alert(`${soundValue} sounds like ${colorValue}`);
-    sound.current.value="";
-    color.current.value="";
+    alert(`${sound} sounds like ${color}`);
+    setSound("");
+    setColor("#000000");
   };
 
   return (
     <form onSubmit={submit}>
-      <input type="text" ref={sound} placeholder='Sound...'/>
-      <input type="color" ref={color} />
+      <input type="text" value={sound} placeholder='Sound...' onChange={(e) => setSound(e.target.value)}/>
+      <input type="color" value={color} onChange={(e) => setColor(e.target.value)}/>
       <button>ADD</button>
     </form>
   );
