@@ -4,12 +4,18 @@ import './index.css';
 
 function App() {
 
-  const [number, setNumber] = useReducer((number, newNumber) =>
-    number + newNumber, 1
+  const [checked, toggle] = useReducer(
+    (checked) => !checked, false
   );
 
   return (
-    <h1 onClick={() => setNumber(number)}>{number}</h1>
+    <>
+      <input
+        type="checkbox"
+        value={checked}
+        onChange={toggle}
+      />{checked ? "checked" : "not checked"}
+    </>
   );
 
 }
