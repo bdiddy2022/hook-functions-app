@@ -1,24 +1,39 @@
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import { useFetch } from './useFetch';
 
-const TreesContext = createContext();
 
-export const useTrees = () => useContext(TreesContext);
+// Custom hook (useFetch) will account for three States: 
+//   1) if the data isn't available yet, but it loading
+//   2) if the data arrives
+//   3) if an error occurs
 
-const trees = [
-  { id: "1", type: "Maple" },
-  { id: "2", type: "Oak" },
-  { id: "3", type: "Family" },
-  { id: "4", type: "Component" }
-];
+//putting the custom hook into a separate file cleaned up the component file by... a lot
 
+function App({ login }) {
+  const { loading, data, error } = useFetch(`https://api.github.com/users/${login}`);
+
+  if (loading) { return (<h1>Loading...</h1>); }
+  if (error) { return (<pre>{JSON.stringify(error, null, 2)}</pre>); }
+
+  if (data) {
+    return (
+      <div>
+        <img src={data.avatar_url} alt={data.login} />
+        <h1>{data.login}</h1>
+        {data.name && <p>{data.name}</p>}
+        {data.location && <p>{data.location}</p>}
+        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      </div>
+    );
+  }
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <TreesContext.Provider value={ {trees} }>
-    <App />
-  </TreesContext.Provider>
+  <React.StrictMode>
+    <App login="bdiddy2022" />
+  </React.StrictMode>
 );
 // Using useContext and wrapping the root render in its provider allows the chosen component to be accessed app-wide. This would be particularly useful if the given component, for example, contained thousands of items and would need to be used in multiple places within the app 
