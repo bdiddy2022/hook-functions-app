@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { useFetch } from './useFetch';
 
+//Libraries which use hooks!
+  // 1) React Router
+  // 2) Relay
+  // 3) Apollo
+  // 4) Even more!
+
 
 // Custom hook (useFetch) will account for three States: 
 //   1) if the data isn't available yet, but it loading
