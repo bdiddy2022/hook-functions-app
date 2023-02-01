@@ -1,37 +1,22 @@
-import React, { useEffect, useReducer, useState, useRef} from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { useInput } from './useInput';
+import App from './App';
 
-function App() {
+export const TreesContext = createContext();
 
-  const [titleProps, resetTitle] = useInput("");
-  const [colorProps, resetColor] = useInput("#000000");
+const trees = [
+  { id: "1", type: "Maple" },
+  { id: "2", type: "Oak" },
+  { id: "3", type: "Family" },
+  { id: "4", type: "Component" }
+];
 
-
-  const submit = (e) => {
-    e.preventDefault();
-    alert(`${titleProps.value} sounds like ${colorProps.value}`);
-    resetColor();
-    resetTitle();
-    
-  };
-
-  
-
-  return (
-    <form onSubmit={submit}>
-      <input {...titleProps} type="text" placeholder='Sound...' />
-      <input {...colorProps} type="color" />
-      <button>ADD</button>
-    </form>
-  );
-
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <TreesContext.Provider value={ {trees} }>
     <App />
-  </React.StrictMode>
+  </TreesContext.Provider>
 );
+// Using useContext and wrapping the root render in its provider allows the chosen component to be accessed app-wide. This would be particularly useful if the given component, for example, contained thousands of items and would need to be used in multiple places within the app 
