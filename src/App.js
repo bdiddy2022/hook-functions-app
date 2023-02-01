@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
-import { TreesContext } from './index.js';
+import { useTrees } from './';
 
 function App() {
 
-  const { trees }= useContext(TreesContext);
+  const { trees }= useTrees();
 
   return (
     <div>
