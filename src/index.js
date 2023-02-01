@@ -9,6 +9,7 @@ import { useFetch } from './useFetch';
   // 3) Apollo
   // 4) Even more!
 
+// great website to discover/learn further : usehooks.com
 
 // Custom hook (useFetch) will account for three States: 
 //   1) if the data isn't available yet, but it loading
